@@ -2,7 +2,6 @@ import argparse
 import numpy as np
 from PIL import Image
 
-# Наборы символов: от тёмных (плотных) к светлым
 GSCALE_DETAILED = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "
 GSCALE_SIMPLE = "@%#*+=-:. "
 
@@ -19,9 +18,9 @@ def convert_image_to_ascii(image_path, cols=100, scale=0.43, detailed=False):
 
     gscale = GSCALE_DETAILED if detailed else GSCALE_SIMPLE
 
-    # Размер одного блока изображения, который станет одним символом
+   
     tile_width = width / cols
-    tile_height = tile_width / scale  # scale компенсирует то, что символы в терминале выше, чем шире
+    tile_height = tile_width / scale  
     rows = max(1, int(height / tile_height))
 
     ascii_rows = []
@@ -37,7 +36,7 @@ def convert_image_to_ascii(image_path, cols=100, scale=0.43, detailed=False):
             tile = image.crop((x1, y1, x2, y2))
             avg = get_average_brightness(tile)
 
-            # Переводим яркость 0..255 в индекс символа
+           
             char_index = int(avg / 255 * (len(gscale) - 1))
             line += gscale[char_index]
 
